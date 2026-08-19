@@ -5,7 +5,7 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-INSTALL_LOG="/tmp/mirza_install.log"
+INSTALL_LOG="/tmp/idont_install.log"
 
 export DEBIAN_FRONTEND=noninteractive
 export NEEDRESTART_MODE=a
@@ -55,7 +55,7 @@ _step_eta() {
         "Configuring firewall"*)             echo 15 ;;
         "Restarting Apache"*)                echo 5  ;;
         "Setting PHP as the active"*|"Setting PHP "*) echo 6  ;;
-        "Downloading Mirza"*)                echo 20 ;;
+        "Downloading durwinambot"*)                echo 20 ;;
         "Extracting source files"*)          echo 5  ;;
         "Configuring MySQL root access"*)    echo 10 ;;
         "Opening firewall ports"*)           echo 4  ;;
@@ -167,7 +167,7 @@ _drule()  { printf "  ${C_BORDER}%s${CR}\n" "$(_repeat "━" "$UI_W")"; }
 banner()  {
     echo
     _drule
-    printf "  ${C_OK}▌${CR} ${C_TITLE}MIRZA${CR}  ${C_DIM}— VPN Subscription Management${CR}\n"
+    printf "  ${C_OK}▌${CR} ${C_TITLE}durwinam${CR}  ${C_DIM}— VPN Subscription Management${CR}\n"
     _drule
 }
 # Menu item row: [n] label  (left-aligned, no right border)
@@ -188,8 +188,8 @@ ensure_dns() {
     echo -e "  ${C_WARN}!${CR} ${C_WARN}DNS resolution failed - configuring public DNS...${CR}"
     if [ -L "$RESOLV" ]; then
         rm -f "$RESOLV" 2>/dev/null
-    elif [ -f "$RESOLV" ] && [ ! -f "${RESOLV}.mirza.bak" ]; then
-        cp -a "$RESOLV" "${RESOLV}.mirza.bak" 2>/dev/null
+    elif [ -f "$RESOLV" ] && [ ! -f "${RESOLV}.durwinam.bak" ]; then
+        cp -a "$RESOLV" "${RESOLV}.durwinam.bak" 2>/dev/null
     fi
     { local d; for d in "${DNS_SERVERS[@]}"; do echo "nameserver $d"; done; } > "$RESOLV" 2>/dev/null
     if command -v resolvectl >/dev/null 2>&1; then
@@ -202,7 +202,7 @@ ensure_dns() {
     return 1
 }
 
-# Ensure /usr/local/bin/mirza points at the master script
+# Ensure /usr/local/bin/durwinam points at the master script
 _link_mirza() {
     local master="$1" link="$2"
     chmod +x "$master" 2>/dev/null
@@ -216,9 +216,9 @@ _link_mirza() {
 # install it to /root/install.sh, link it into /usr/local/bin, and re-exec.
 function self_update_script() {
     local MASTER_PATH="/root/install.sh"
-    local BIN_LINK="/usr/local/bin/mirza"
-    local URL="https://raw.githubusercontent.com/mahdiMGF2/mirzabot/main/install.sh"
-    local TEMP_FILE="/tmp/mirzabot_update.sh"
+    local BIN_LINK="/usr/local/bin/durwinam"
+    local URL="https://raw.githubusercontent.com/durwinam/durwinam-bot/main/install.sh"
+    local TEMP_FILE="/tmp/durwinam-bot_update.sh"
 
     # Make sure DNS works before reaching GitHub
     ensure_dns >/dev/null 2>&1
@@ -281,17 +281,17 @@ function self_update_script() {
 self_update_script "$@"
 
 # ── Repo / paths ─────────────────────────────────────────────
-BOT_DIR_DEFAULT="/var/www/html/mirzaprobotconfig"
+BOT_DIR_DEFAULT="/var/www/html/durwinambotconfig"
 CONFIG_FILE_DEFAULT="$BOT_DIR_DEFAULT/config.php"
-GIT_REPO="mahdiMGF2/mirzabot"
-LATEST_CACHE="/tmp/.mirza_latest_version"
-IP_CACHE="/tmp/.mirza_server_ip"
+GIT_REPO="durwinam/durwinam-bot"
+LATEST_CACHE="/tmp/.idont-bot_latest_version"
+IP_CACHE="/tmp/.durwinam_server_ip"
 
 # ── Resumable-install state engine ───────────────────────────
 # Survives reboots / network drops. Lets a failed install resume
 # from the last completed phase instead of starting from scratch.
 STATE_DIR="/root/confmirza"
-STATE_FILE="$STATE_DIR/.mirza_install_state"
+STATE_FILE="$STATE_DIR/.idont-bot_install_state"
 
 state_init() {
     mkdir -p "$STATE_DIR" 2>/dev/null
@@ -671,7 +671,7 @@ ensure_cron() {
 export -f _crontab_present _cron_unit_name _cron_daemon_active ensure_cron
 
 # Refuse to install on a server that already has conflicting software.
-# Only runs on a brand-new install (never on resume / Mirza's own partial state).
+# Only runs on a brand-new install (never on resume / durwnam's own partial state).
 precheck_fresh_server() {
     local found=()
     _pkg_installed apache2 && found+=("apache2 (web server)")
@@ -728,7 +728,7 @@ install_pause() {
     echo -e "  ${C_DIM}This is usually caused by the server losing internet or a network error.${CR}"
     echo ""
     echo -e "  ${C_TXT}Completed steps are saved. Just run it again:${CR}"
-    echo -e "      ${C_KEY}mirza install${CR}"
+    echo -e "      ${C_KEY}durwinam install${CR}"
     echo -e "  ${C_DIM}It resumes from this step; values you already entered (domain/token/...) will not be asked again.${CR}"
     echo -e "  ${C_WARN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${CR}"
     echo ""
@@ -909,8 +909,8 @@ version_section() {
     else
         _kv "Latest" "$(_dot warn) ${C_DIM}unknown (offline)${CR}"
     fi
-    _kv "Channel" "${C_DIM}t.me/mirzapanel${CR}"
-    _kv "Group" "${C_DIM}t.me/mirzapanelgroup${CR}"
+    _kv "Channel" "${C_DIM}t.me/idontpanel${CR}"
+    _kv "Group" "${C_DIM}t.me/durwinampanelgroup${CR}"
 }
 
 bot_section() {
@@ -1069,7 +1069,7 @@ function renew_ssl() {
     _kv "Domain" "${C_KEY}${domain}${CR}"
 
     if ! command -v certbot >/dev/null 2>&1; then
-        echo -e "  ${C_BAD}●${CR} ${C_BAD}certbot is not installed. Install Mirza first.${CR}"
+        echo -e "  ${C_BAD}●${CR} ${C_BAD}certbot is not installed. Install durwinam first.${CR}"
         sleep 1; show_menu; return 1
     fi
 
@@ -1119,7 +1119,7 @@ function backup_bot() {
 
     CONFIG_PATH="/var/www/html/mirzaprobotconfig/config.php"
     if [ ! -f "$CONFIG_PATH" ]; then
-        printf "    ${C_BAD}●${CR} ${C_BAD}Mirza is not installed. config.php not found.${CR}\n"
+        printf "    ${C_BAD}●${CR} ${C_BAD}durwinam is not installed. config.php not found.${CR}\n"
         echo ""
         printf "  ${C_PROMPT}❯${CR} Press Enter to return to the menu... "
         read -r _
@@ -1308,9 +1308,9 @@ function import_bot() {
 function show_menu() {
     show_logo
     _sec "Menu"
-    _mi "1" "Install Mirza"
-    _mi "2" "Update Mirza"
-    _mi "3" "Remove Mirza"
+    _mi "1" "Install durwinam"
+    _mi "2" "Update durwinam"
+    _mi "3" "Remove durwinam"
     _mi "4" "Migrate: Free -> Pro (Beta)"
     _mi "5" "Renew SSL certificate"
     _mi "6" "Backup Database"
@@ -1341,9 +1341,9 @@ function show_help_screen() {
     banner
 
     _sec "Commands"
-    _kv "install" "${C_DIM}Install Mirza${CR}"
-    _kv "update" "${C_DIM}Update Mirza (choose channel / version)${CR}"
-    _kv "remove" "${C_DIM}Remove Mirza and its services${CR}"
+    _kv "install" "${C_DIM}Install durwinam${CR}"
+    _kv "update" "${C_DIM}Update durwinam (choose channel / version)${CR}"
+    _kv "remove" "${C_DIM}Remove durwinam and its services${CR}"
     _kv "migrate" "${C_DIM}Migrate Free -> Pro${CR}"
     _kv "renew" "${C_DIM}Renew the bot domain SSL certificate${CR}"
     _kv "backup" "${C_DIM}Backup database & send to Telegram${CR}"
@@ -1364,8 +1364,8 @@ function show_help_screen() {
     _kv "-h, --help" "${C_DIM}Show CLI help and exit${CR}"
 
     _sec "Examples"
-    printf "    ${C_KEY}mirza install --channel auto${CR}\n"
-    printf "    ${C_KEY}mirza install --name myvpnbot --token 123:ABC \\\\${CR}\n"
+    printf "    ${C_KEY}durwinam install --channel auto${CR}\n"
+    printf "    ${C_KEY}durwinam install --name myvpnbot --token 123:ABC \\\\${CR}\n"
     printf "    ${C_DIM}            --admin 111 --domain bot.example.com --version 0.1.7${CR}\n"
     printf "    ${C_KEY}mirza update --version 0.1.6${CR}\n"
     printf "    ${C_KEY}mirza update --channel release${CR}\n"
