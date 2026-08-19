@@ -14,16 +14,16 @@
 </p>
 
 <p>
-  <a href="https://github.com/mahdiMGF2/durwinambot/stargazers">
-    <img src="https://img.shields.io/github/stars/mahdiMGF2/durwinambot?style=flat-square&color=f5c518" alt="Stars"/>
+  <a href="https://github.com/durwinam/durwinam-bot/stargazers">
+    <img src="https://img.shields.io/github/stars/durwinam/durwinam-bot?style=flat-square&color=f5c518" alt="Stars"/>
   </a>
-  <a href="https://github.com/mahdiMGF2/durwinambot/network/members">
-    <img src="https://img.shields.io/github/forks/mahdiMGF2/durwinambot?style=flat-square" alt="Forks"/>
+  <a href="https://github.com/durwinam/durwinam-bot/network/members">
+    <img src="https://img.shields.io/github/forks/durwinam/durwinam-bot?style=flat-square" alt="Forks"/>
   </a>
-  <a href="https://github.com/mahdiMGF2/durwinambot/issues">
-    <img src="https://img.shields.io/github/issues/mahdiMGF2/durwinambot?style=flat-square" alt="Issues"/>
+  <a href="https://github.com/durwinam/durwinam-bot/issues">
+    <img src="https://img.shields.io/github/issues/durwinam/durwinam-bot?style=flat-square" alt="Issues"/>
   </a>
-  <a href="https://github.com/mahdiMGF2/durwinambot/blob/main/LICENSE">
+  <a href="https://github.com/durwinam/durwinam-bot/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/mahdiMGF2/durwinambot?style=flat-square" alt="License"/>
   </a>
   <img src="https://img.shields.io/badge/PHP-8.2-777BB4?style=flat-square&logo=php&logoColor=white" alt="PHP 8.2"/>
@@ -151,7 +151,7 @@ Durwinam Bot integrates with the most popular VPN and network management panels:
 Run the following command on your server as **root**:
 
 ```bash
-curl -o install.sh -L https://raw.githubusercontent.com/mahdiMGF2/durwinambot/main/install.sh && bash install.sh
+curl -o install.sh -L https://raw.githubusercontent.com/durwinam/durwinam-bot/main/install.sh && bash install.sh
 ```
 
 An interactive menu will appear:
@@ -173,7 +173,7 @@ An interactive menu will appear:
 Run the same command and select **`2`**:
 
 ```bash
-curl -o install.sh -L https://raw.githubusercontent.com/mahdiMGF2/durwinambot/main/install.sh && bash install.sh
+curl -o install.sh -L https://raw.githubusercontent.com/durwinam/durwinam-bot/main/install.sh && bash install.sh
 ```
 
 ### Remove
