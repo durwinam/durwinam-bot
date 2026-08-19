@@ -5,7 +5,7 @@ date_default_timezone_set('Asia/Tehran');
 #-----------------------------#
 function token_panel($code_panel, $verify = true)
 {
-    $panel = select("durwinam_panel", "*", "code_panel", $code_panel, "select");
+    $panel = select("marzban_panel", "*", "code_panel", $code_panel, "select");
 
     // Check if panel data exists
     if ($panel === null) {
